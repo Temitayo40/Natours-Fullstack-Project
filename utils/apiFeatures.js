@@ -21,7 +21,7 @@ class APIFeature {
   // queryStr = queryStr.replace(/\b(gt|gte|lt|lte)\b/g, match => `$${match}`);
 
   filter() {
-    const queryObj = { ...queryString };
+    const queryObj = { ...this.queryString };
     const excludedFields = ['pages', 'sort', 'limit', 'fields'];
     excludedFields.forEach(el => delete queryObj[el]);
 
