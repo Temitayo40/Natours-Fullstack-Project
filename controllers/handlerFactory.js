@@ -24,7 +24,7 @@ exports.updateOne = Model =>
     });
 
     if (!doc) {
-      return next(new AppError('No doc found with that ID', 404));
+      return next(new AppError('No document found with that ID', 404));
     }
 
     res.status(200).json({
@@ -37,12 +37,12 @@ exports.updateOne = Model =>
 
 exports.createOne = Model =>
   catchAsync(async (req, res, next) => {
-    const newdoc = await Model.create(req.body);
+    const doc = await Model.create(req.body);
 
     res.status(201).json({
       status: 'success',
       data: {
-        data: newdoc
+        data: doc
       }
     });
   });
@@ -53,10 +53,8 @@ exports.getOne = (Model, popOptions) =>
     if (popOptions) query = query.populate(popOptions);
     const doc = await query;
 
-    // doc.findOne({ _id: req.params.id })
-
     if (!doc) {
-      return next(new AppError('No documents found with that ID', 404));
+      return next(new AppError('No document found with that ID', 404));
     }
 
     res.status(200).json({
@@ -69,7 +67,7 @@ exports.getOne = (Model, popOptions) =>
 
 exports.getAll = Model =>
   catchAsync(async (req, res, next) => {
-    // tol allow for nested get review on tours
+    // To allow for nested GET reviews on tour (hack)
     let filter = {};
     if (req.params.tourId) filter = { tour: req.params.tourId };
 
